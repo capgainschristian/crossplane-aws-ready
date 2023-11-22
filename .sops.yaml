@@ -1,0 +1,5 @@
+creation_rules:
+    # Encrypt and decrypt credential files
+    - path_regex: .*/credentials/.*
+      kms: 'arn:aws:kms:us-east-1:624650410424:key/a2a008e4-6047-4e9c-9b41-77d998b40089+arn:aws:iam::624650410424:role/AdminRole'
+
