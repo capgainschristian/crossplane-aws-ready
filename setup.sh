@@ -21,7 +21,7 @@ rm delete_me.txt
 
 # Generate AWS providers
 kubectl apply -f crossplane/aws/s3.yaml
-kubectl wait providers/upbound-provider-family-aws --for=condition=Healthy --timeout=30s
+kubectl wait provider/provider-aws-s3 --for=condition=Healthy --timeout=30s
 kubectl apply -f crossplane/aws/provider_config.yaml
 
 # App of Apps install
@@ -31,3 +31,4 @@ helm template charts/root-app/ | kubectl apply -f -
 echo "To login to argoCD web GUI, please use the following password.."
 kubectl get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 #kubectl port-forward svc/argo-cd-argocd-server 8080:443
+
