@@ -3,6 +3,9 @@
 # Start minikube
 minikube start --cpus=4 --memory=16GB
 
+# Create a default VPC if you don't have one already
+aws ec2 create-default-vpc
+
 # Setup ArgoCD
 helm repo add argo-cd https://argoproj.github.io/argo-helm
 helm dep update charts/argo-cd/
@@ -23,6 +26,7 @@ rm delete_me.txt
 kubectl apply -f crossplane/aws/s3.yaml
 kubectl wait provider/provider-aws-s3 --for=condition=Healthy --timeout=30s
 kubectl apply -f crossplane/aws/provider_config.yaml
+kubectl apply -f crossplane/aws/ec2.yaml
 
 # App of Apps install
 helm template charts/root-app/ | kubectl apply -f -
