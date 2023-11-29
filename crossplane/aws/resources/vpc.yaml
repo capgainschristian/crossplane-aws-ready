@@ -1,0 +1,11 @@
+apiVersion: ec2.aws.upbound.io/v1beta1
+kind: VPC
+metadata:
+  name: production-vpc
+spec:
+  forProvider:
+    cidrBlock: 10.7.0.0/16
+    enableDnsHostnames: true
+    enableDnsSupport: true
+    region: us-east-1
+
