@@ -7,9 +7,9 @@ minikube start --cpus=4 --memory=16GB
 aws ec2 create-default-vpc
 
 # Setup ArgoCD
-helm repo add argo-cd https://argoproj.github.io/argo-helm
-helm dep update charts/argo-cd/
-helm install argo-cd charts/argo-cd/ --wait
+kubectl create ns argocd
+kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml -n argocd && \
+#kubectl wait --for=condition=ready pod $(kubectl get pods -n argocd | awk '{if ($1 ~ "argocd-server-") print $1}') -n argocd --timeout=30s
 
 # Setup Crossplane
 kubectl create namespace crossplane-system
@@ -23,16 +23,15 @@ kubectl create secret generic aws-secret -n crossplane-system --from-file=creds=
 rm delete_me.txt
 
 # Generate AWS providers
-kubectl apply -f crossplane/aws/s3.yaml
-kubectl wait provider/provider-aws-s3 --for=condition=Healthy --timeout=30s
+kubectl apply -f crossplane/aws/aws.yaml
+kubectl wait provider/provider-aws --for=condition=Healthy --timeout=240s
 kubectl apply -f crossplane/aws/provider_config.yaml
-kubectl apply -f crossplane/aws/ec2.yaml
 
 # App of Apps install
 helm template charts/root-app/ | kubectl apply -f -
 
 # ArgoCD password
 echo "To login to argoCD web GUI, please use the following password.."
-kubectl get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 -d
 #kubectl port-forward svc/argo-cd-argocd-server 8080:443
 
