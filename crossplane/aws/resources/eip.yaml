@@ -1,16 +1,17 @@
 apiVersion: ec2.aws.upbound.io/v1beta1
-kind: VPC
+kind: EIP
 metadata:
-  name: production-vpc
   labels:
     environment: production
     app: webapp
     owner: webdevs1
+  name: eip1
 spec:
   forProvider:
-    cidrBlock: 10.7.0.0/16
-    enableDnsHostnames: true
-    enableDnsSupport: true
+    instanceRef:
+      name: webapp-ec2
     region: us-east-1
+    vpc: true
   providerConfigRef:
     name: default
+

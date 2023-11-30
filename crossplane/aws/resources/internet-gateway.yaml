@@ -1,16 +1,18 @@
 apiVersion: ec2.aws.upbound.io/v1beta1
-kind: VPC
+kind: InternetGateway
 metadata:
-  name: production-vpc
+  name: webapp-routegw
   labels:
     environment: production
     app: webapp
     owner: webdevs1
 spec:
   forProvider:
-    cidrBlock: 10.7.0.0/16
-    enableDnsHostnames: true
-    enableDnsSupport: true
     region: us-east-1
+    tags:
+      Name: main
+    vpcIdRef:
+      name: production-vpc
   providerConfigRef:
     name: default
+

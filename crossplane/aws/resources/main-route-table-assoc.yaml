@@ -1,16 +1,17 @@
 apiVersion: ec2.aws.upbound.io/v1beta1
-kind: VPC
+kind: MainRouteTableAssociation
 metadata:
-  name: production-vpc
   labels:
     environment: production
     app: webapp
     owner: webdevs1
+  name: webapp-public
 spec:
   forProvider:
-    cidrBlock: 10.7.0.0/16
-    enableDnsHostnames: true
-    enableDnsSupport: true
     region: us-east-1
+    routeTableIdRef:
+      name: prod-public-route
+    vpcIdRef:
+      name: production-vpc 
   providerConfigRef:
     name: default

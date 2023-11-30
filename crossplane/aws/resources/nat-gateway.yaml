@@ -1,16 +1,20 @@
 apiVersion: ec2.aws.upbound.io/v1beta1
-kind: VPC
+kind: NATGateway
 metadata:
-  name: production-vpc
+  name: webapp-natgw
   labels:
     environment: production
     app: webapp
     owner: webdevs1
 spec:
   forProvider:
-    cidrBlock: 10.7.0.0/16
-    enableDnsHostnames: true
-    enableDnsSupport: true
+    connectivityType: public
+    allocationId: eip1
     region: us-east-1
+    subnetIdRef:
+      name: subnet-east-1b
+    tags:
+      Name: gw NAT
   providerConfigRef:
     name: default
+

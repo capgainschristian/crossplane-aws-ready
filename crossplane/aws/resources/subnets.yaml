@@ -1,0 +1,39 @@
+---
+apiVersion: ec2.aws.upbound.io/v1beta1
+kind: Subnet
+metadata:
+  labels:
+    environment: production
+    app: webapp
+    owner: webdevs1
+  name: subnet-east-1a
+spec:
+  forProvider:
+    availabilityZone: us-east-1a
+    cidrBlock: 10.7.202.0/24
+    region: us-east-1
+    vpcIdSelector:
+      matchLabels:
+        environment: production
+  providerConfigRef:
+    name: default
+---
+apiVersion: ec2.aws.upbound.io/v1beta1
+kind: Subnet
+metadata:
+  labels:
+    environment: production
+    app: webapp
+    owner: webdevs1
+  name: subnet-east-1b
+spec:
+  forProvider:
+    availabilityZone: us-east-1b
+    cidrBlock: 10.7.102.0/24
+    mapPublicIpOnLaunch: true
+    region: us-east-1
+    vpcIdSelector:
+      matchLabels:
+        environment: production
+  providerConfigRef:
+    name: default

@@ -1,7 +1,11 @@
 apiVersion: ec2.aws.upbound.io/v1beta1
 kind: Instance
 metadata:
-  name: crossplane-ec2-instance
+  name: webapp-ec2
+  labels:
+    environment: production
+    app: webapp
+    owner: webdevs1
 spec:
   forProvider:
     region: us-east-1
