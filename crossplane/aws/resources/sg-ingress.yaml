@@ -10,7 +10,8 @@ metadata:
 spec:
   forProvider:
     region: us-east-1
-    cidrBlocks: 0.0.0.0/0
+    cidrBlocks: 
+      - 0.0.0.0/0
     fromPort: 22
     toPort: 22
     protocol: tcp
@@ -29,7 +30,8 @@ metadata:
 spec:
   forProvider:
     region: us-east-1
-    cidrBlocks: 0.0.0.0/0
+    cidrBlocks: 
+      - 0.0.0.0/0
     fromPort: 0
     toPort: 0
     protocol: all

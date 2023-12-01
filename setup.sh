@@ -3,9 +3,6 @@
 # Start minikube
 minikube start --cpus=4 --memory=16GB
 
-# Create a default VPC if you don't have one already
-aws ec2 create-default-vpc
-
 # Setup ArgoCD
 kubectl create ns argocd
 kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml -n argocd && \

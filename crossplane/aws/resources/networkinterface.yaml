@@ -1,15 +1,16 @@
 apiVersion: ec2.aws.upbound.io/v1beta1
-kind: EIP
+kind: NetworkInterface
 metadata:
   labels:
     environment: production
     app: webapp
     owner: webdevs1
-  name: eip1
+  name: public-interface
 spec:
   forProvider:
     region: us-east-1
-    vpc: true
+    subnetIdRef:
+      name: subnet-east-1b
   providerConfigRef:
     name: default
 

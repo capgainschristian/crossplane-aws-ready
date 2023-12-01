@@ -9,8 +9,9 @@ metadata:
 spec:
   forProvider:
     connectivityType: public
-    allocationId: eip1
     region: us-east-1
+    allocationIdRef:
+      name: eip1
     subnetIdRef:
       name: subnet-east-1b
     tags:
