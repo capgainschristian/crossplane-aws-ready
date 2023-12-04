@@ -1,34 +1,35 @@
 ---
 apiVersion: ec2.aws.upbound.io/v1beta1
-kind: RouteTableAssociation
+kind: Route
 metadata:
+  name: public-route
   labels:
     environment: production
     app: webapp
     owner: webdevs1
-  name: private-route-table
 spec:
   forProvider:
-    region: us-east-1
-    routeTableIdRef:
-      name: private-route-table
-    subnetIdRef:
-      name: subnet-east-1b
----
-apiVersion: ec2.aws.upbound.io/v1beta1
-kind: RouteTableAssociation
-metadata:
-  labels:
-    environment: production
-    app: webapp
-    owner: webdevs1
-  name: public-route-table
-spec:
-  forProvider:
+    destinationCidrBlock: 0.0.0.0/0
+    gatewayIdRef:
+      name: webapp-routegw
     region: us-east-1
     routeTableIdRef:
       name: public-route-table
-    subnetIdRef:
-      name: subnet-east-1a
-
+---
+apiVersion: ec2.aws.upbound.io/v1beta1
+kind: Route
+metadata:
+  name: private-route
+  labels:
+    environment: production
+    app: webapp
+    owner: webdevs1
+spec:
+  forProvider:
+    destinationCidrBlock: 0.0.0.0/0
+    natGatewayIdRef:
+      name: webapp-natgw
+    region: us-east-1
+    routeTableIdRef:
+      name: private-route-table
 

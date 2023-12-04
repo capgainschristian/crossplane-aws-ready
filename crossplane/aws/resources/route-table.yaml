@@ -1,22 +1,6 @@
 ---
 apiVersion: ec2.aws.upbound.io/v1beta1
-kind: RouteTableAssociation
-metadata:
-  labels:
-    environment: production
-    app: webapp
-    owner: webdevs1
-  name: private-route-table
-spec:
-  forProvider:
-    region: us-east-1
-    routeTableIdRef:
-      name: private-route-table
-    subnetIdRef:
-      name: subnet-east-1b
----
-apiVersion: ec2.aws.upbound.io/v1beta1
-kind: RouteTableAssociation
+kind: RouteTable
 metadata:
   labels:
     environment: production
@@ -26,9 +10,25 @@ metadata:
 spec:
   forProvider:
     region: us-east-1
-    routeTableIdRef:
-      name: public-route-table
-    subnetIdRef:
-      name: subnet-east-1a
+    vpcIdRef:
+      name: production-vpc
+  providerConfigRef:
+    name: default
+---
+apiVersion: ec2.aws.upbound.io/v1beta1
+kind: RouteTable
+metadata:
+  labels:
+    environment: production
+    app: webapp
+    owner: webdevs1
+  name: private-route-table
+spec:
+  forProvider:
+    region: us-east-1
+    vpcIdRef:
+      name: production-vpc
+  providerConfigRef:
+    name: default
 
 
