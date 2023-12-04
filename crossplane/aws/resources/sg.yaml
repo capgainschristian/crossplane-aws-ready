@@ -1,0 +1,82 @@
+---
+apiVersion: ec2.aws.upbound.io/v1beta1
+kind: SecurityGroup
+metadata:
+  labels:
+    environment: production
+    app: webapp
+    owner: webdevs1
+  name: webapp-allow-egress-sg
+spec:
+  forProvider:
+    description: Allow outbound traffic from EC2
+    name: webapp-allow-egress-sg
+    region: us-east-1
+    tags:
+      Name: webapp-allow-egress-sg
+    vpcIdSelector:
+      matchLabels:
+        environment: production
+---
+apiVersion: ec2.aws.upbound.io/v1beta1
+kind: SecurityGroup
+metadata:
+  labels:
+    environment: production
+    app: webapp
+    owner: webdevs1
+  name: webapp-allow-ssh-sg
+spec:
+  forProvider:
+    description: Allow SSH inbound traffic
+    name: webapp-allow-ssh-sg
+    region: us-east-1
+    tags:
+      Name: webapp-allow-ssh-sg
+    vpcIdSelector:
+      matchLabels:
+        environment: production
+---
+apiVersion: ec2.aws.upbound.io/v1beta1
+kind: SecurityGroupRule
+metadata:
+  labels:
+    environment: production
+    app: webapp
+    owner: webdevs1
+  name: webapp-allow-ssh
+spec:
+  forProvider:
+    region: us-east-1
+    cidrBlocks: 
+      - 0.0.0.0/0
+    fromPort: 22
+    toPort: 22
+    protocol: tcp
+    type: ingress
+    securityGroupIdRef:
+      name: webapp-allow-ssh-sg
+  providerConfigRef:
+    name: default
+---
+apiVersion: ec2.aws.upbound.io/v1beta1
+kind: SecurityGroupRule
+metadata:
+  labels:
+    environment: production
+    app: webapp
+    owner: webdevs1
+  name: allow-egress
+spec:
+  forProvider:
+    region: us-east-1
+    cidrBlocks: 
+      - 0.0.0.0/0
+    fromPort: 0
+    toPort: 0
+    protocol: "-1"
+    type: egress
+    securityGroupIdRef:
+      name: webapp-allow-egress-sg
+  providerConfigRef:
+    name: default
