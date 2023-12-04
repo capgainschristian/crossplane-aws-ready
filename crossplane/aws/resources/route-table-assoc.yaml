@@ -1,5 +1,5 @@
 apiVersion: ec2.aws.upbound.io/v1beta1
-kind: MainRouteTableAssociation
+kind: RouteTableAssociation 
 metadata:
   labels:
     environment: production
@@ -9,9 +9,7 @@ metadata:
 spec:
   forProvider:
     region: us-east-1
+    subnetIdRef:
+      name: subnet-east-1b
     routeTableIdRef:
       name: prod-public-route
-    vpcIdRef:
-      name: production-vpc 
-  providerConfigRef:
-    name: default

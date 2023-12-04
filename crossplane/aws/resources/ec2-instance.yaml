@@ -12,8 +12,9 @@ spec:
     ami: ami-0230bd60aa48260c6
     instanceType: t2.micro
     keyName: crossplane_key
-    vpcSecurityGroupIdSelector:
-      matchLabels:
-        environment: production
+    networkInterface:
+      - deviceIndex: 0
+        networkInterfaceIdRef:
+          name: public-interface
   providerConfigRef:
     name: default

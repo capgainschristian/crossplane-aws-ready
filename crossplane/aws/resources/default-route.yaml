@@ -6,7 +6,7 @@ metadata:
     environment: production
     app: webapp
     owner: webdevs1
-  name: prod-private-route
+  name: default-private-route
 spec:
   forProvider:
     defaultRouteTableIdRef:
@@ -14,7 +14,7 @@ spec:
     region: us-east-1
     route:
       - cidrBlock: 0.0.0.0/0
-        natGatewayId: webapp-natgw
+        natGatewayId: nat-08fa18541358b48e3
   providerConfigRef:
     name: default
 ---
@@ -25,7 +25,7 @@ metadata:
     environment: production
     app: webapp
     owner: webdevs1
-  name: prod-public-route
+  name: default-public-route
 spec:
   forProvider:
     defaultRouteTableIdRef:
@@ -33,6 +33,23 @@ spec:
     region: us-east-1
     route:
       - cidrBlock: 0.0.0.0/0
-        gatewayId: webapp-routegw
+        gatewayIdRef: 
+          name: webapp-routegw
   providerConfigRef:
     name: default
+---
+apiVersion: ec2.aws.upbound.io/v1beta1
+kind: RouteTable
+metadata:
+  labels:
+    environment: production
+    app: webapp
+    owner: webdevs1
+  name: prod-public-route
+spec:
+  forProvider:
+    region: us-east-1
+    tags:
+      Name: prod-public-route
+    vpcIdRef:
+      name: production-vpc
