@@ -8,7 +8,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/capgainschristian/platform.git
-    path: charts/argo-cd
+    path: crossplane/aws/resources
     targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
