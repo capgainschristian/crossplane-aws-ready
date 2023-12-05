@@ -31,4 +31,10 @@ chmod 400 MyKeyPair.pem
 
 4) Run the ./setup script.
 
-5) Once everything is up and running, try to ssh into your ec2 instance using MyKeyPair.pem.
+5) Once setup is complete, run the following:
+
+```
+kubectl apply -f crossplane/aws/resources/.
+```
+
+5) Wait for your EC2 instance to show up on AWS, then try to ssh into it using your MyKeyPair.pem key.
