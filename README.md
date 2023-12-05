@@ -8,12 +8,14 @@ PREREQUISITES
 
 2) You will need to generate an AWS key-pair file:
 
+```
 [default]
 aws_access_key_id = <your_aws_access_key>
 aws_secret_access_key = <your_aws_secret_key>
 
 Save the file as aws-credentials.txt and then run the following:
 
+```
 kubectl create secret \
 generic aws-secret \
 -n crossplane-system \
@@ -21,6 +23,7 @@ generic aws-secret \
 
 3) You will need to create an EC2 key-pair called crossplane_key:
 
+```
 aws ec2 create-key-pair --key-name crossplane_key --query 'KeyMaterial' --output text > MyKeyPair.pem
 chmod 400 MyKeyPair.pem
 
