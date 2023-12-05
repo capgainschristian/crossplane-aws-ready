@@ -39,4 +39,4 @@ chmod 400 MyKeyPair.pem
 kubectl apply -f crossplane/aws/resources/.
 ```
 
-5) Wait for your EC2 instance to show up on AWS, then try to ssh into it using your MyKeyPair.pem key.
+6) Wait for your EC2 instance to show up on AWS, then try to ssh into it using your MyKeyPair.pem key.
