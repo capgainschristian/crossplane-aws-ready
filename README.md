@@ -16,6 +16,8 @@ aws_secret_access_key = <your_aws_secret_key>
 Save the file as aws-credentials.txt and then run the following:
 
 ```
+kubectl create ns crossplane-system
+
 kubectl create secret \
 generic aws-secret \
 -n crossplane-system \
