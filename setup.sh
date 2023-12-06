@@ -30,5 +30,4 @@ helm template charts/root-app/ | kubectl apply -f -
 # ArgoCD password
 echo "To login to argoCD web GUI, please use the following password.."
 kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 -d
-#kubectl port-forward svc/argo-cd-argocd-server 8080:443
-
+#kubectl port-forward svc/argocd-server 8080:443 -n argocd
