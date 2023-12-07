@@ -3,9 +3,27 @@
 # Start minikube
 minikube start --cpus=4 --memory=16GB
 
-# Setup ArgoCD
+# Add argocd secret
+
 kubectl create ns argocd
-kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml -n argocd && \
+sops -d charts/credentials/argocd-repo-creds.txt > env_vars.txt && source env_vars.txt
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: Secret
+metadata:
+  name: private-repo-creds
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repo-creds
+stringData:
+  type: ${TYPE}
+  url: ${URL}
+  password: ${PASSWORD}
+  username: ${USERNAME}
+EOF
+rm env_vars.txt
+
+kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml -n argocd
 #kubectl wait --for=condition=ready pod $(kubectl get pods -n argocd | awk '{if ($1 ~ "argocd-server-") print $1}') -n argocd --timeout=30s
 
 # Setup Crossplane
