@@ -2,12 +2,12 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: aws
-  namespace: aws
+  namespace: default
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: aws
+    namespace: default
     server: https://kubernetes.default.svc
   project: default
   source:
