@@ -15,8 +15,8 @@ spec:
     repoURL: https://github.com/argoproj/argo-helm.git
     targetRevision: HEAD
   syncPolicy:
-    automated: {}
+    automated:
+      prune: false
     syncOptions:
-      - CreateNamespace=true
       - ServerSideApply=true
 
