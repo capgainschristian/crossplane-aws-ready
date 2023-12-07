@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: aws
+  namespace: aws
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: aws
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: crossplane/aws/resources/
+    repoURL: https://github.com/capgainschristian/crossplane-aws-ready
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+

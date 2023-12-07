@@ -1,0 +1,13 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-of-apps
+spec:
+  destination:
+    name: in-cluster
+    namespace: argocd
+  source:
+    path: charts
+    repoURL: 'https://github.com/capgainschristian/crossplane-aws-ready'
+    targetRevision: HEAD
+  project: default
