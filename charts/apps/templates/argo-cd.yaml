@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argo-cd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    name: in-cluster
+    namespace: default
+  source:
+    path: charts/argo-cd
+    repoURL: 'https://github.com/capgainschristian/crossplane-aws-ready'
+    targetRevision: HEAD
+  project: default
+  syncPolicy:
+    automated:
+      selfHeal: true
+

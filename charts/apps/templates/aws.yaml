@@ -8,7 +8,7 @@ metadata:
 spec:
   destination:
     namespace: default
-    server: https://kubernetes.default.svc
+    server: in-cluster
   project: default
   source:
     path: crossplane/aws/resources/
@@ -18,6 +18,3 @@ spec:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
-
