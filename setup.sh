@@ -49,6 +49,9 @@ kubectl apply -f crossplane/aws/aws.yaml
 kubectl wait provider/provider-aws --for=condition=Healthy --timeout=240s
 kubectl apply -f crossplane/aws/provider_config.yaml
 
+# Get AWS resources up and running
+kubectl apply -f crossplane/aws/resources.
+
 # App of Apps install
 helm template charts/apps/ | kubectl apply -f -
 
