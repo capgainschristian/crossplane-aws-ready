@@ -9,7 +9,7 @@ spec:
   destination:
     namespace: default
     server: in-cluster
-  project: aws
+  project: default
   source:
     path: crossplane/aws/resources/
     repoURL: https://github.com/capgainschristian/crossplane-aws-ready
