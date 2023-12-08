@@ -48,7 +48,7 @@ kubectl wait provider/provider-aws --for=condition=Healthy --timeout=240s
 kubectl apply -f crossplane/aws/provider_config.yaml
 
 # App of Apps install
-kubectl apply -f charts/app-of-apps.yaml
+helm template charts/apps/ | kubectl apply -f -
 
 # ArgoCD password
 echo "To login to argoCD web GUI, please use the following password.."
