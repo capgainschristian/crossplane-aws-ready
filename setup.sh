@@ -13,8 +13,10 @@ kind: Secret
 metadata:
   name: private-repo-creds
   namespace: argocd
+  annotations:
+    managed-by: argocd.argoproj.io
   labels:
-    argocd.argoproj.io/secret-type: repo-creds
+    argocd.argoproj.io/secret-type: repository
 stringData:
   type: ${TYPE}
   url: ${URL}
