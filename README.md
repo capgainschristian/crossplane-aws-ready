@@ -4,9 +4,9 @@ This repo will get you up and running with an EC2 instance that you can ssh into
 
 PREREQUISITES
 
-1) You will need awscli and minikube installed.
+1) You will need awscli, helm, and minikube installed.
 
-2) You will need to generate an AWS key-pair file:
+2) You will need to add your AWS credentials as a file:
 
 ```
 [default]
@@ -31,12 +31,20 @@ aws ec2 create-key-pair --key-name crossplane_key --query 'KeyMaterial' --output
 chmod 400 MyKeyPair.pem
 ```
 
-4) Run the ./setup script.
+INSTALLATION
 
-5) Once setup is complete, run the following:
+1) Verify that the crossplane-system namespace has the aws-secret:
+
+```
+kubectl get secret aws-secret -n crossplane-system
+```
+
+2) Run the ./setup script.
+
+3) Once setup is complete, run the following:
 
 ```
 kubectl apply -f crossplane/aws/resources/.
 ```
 
-6) Wait for your EC2 instance to show up on AWS, then try to ssh into it using your MyKeyPair.pem key.
+4) Wait for your EC2 instance to show up on AWS, then try to ssh into it using your MyKeyPair.pem key.
