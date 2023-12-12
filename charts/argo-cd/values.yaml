@@ -1,11 +1,10 @@
 argo-cd:
   fullnameOverride: argocd
-  dex:
-    enabled: false
-  notifications:
-    enabled: false
-  applicationSet:
-    enabled: false
-  server:
-    extraArgs:
-      - --insecure
+  configEnabled: true
+  config:
+    repositories: |
+      - type: git
+        url: https://github.com/capgainschristian/crossplane-aws-ready
+      - name: argo-helm
+        type: helm
+        url: https://argoproj.github.io/argo-helm
