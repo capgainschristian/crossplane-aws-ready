@@ -46,6 +46,9 @@ kubectl get secret aws-secret -n crossplane-system
 ![image](https://github.com/capgainschristian/crossplane-aws-ready/assets/63564473/200e4c4a-be57-46d1-9f9f-348a904cd8b8)
 ArgoCD dashboard with AWS application.
 
+![image](https://github.com/capgainschristian/crossplane-aws-ready/assets/63564473/013ec9de-1f52-4cf8-9d4e-83f9efec241b)
+AWS application showing all of the AWS resources currently deployed.
+
 DELETE
 
 To delete all of the resources, run the following command:
@@ -53,6 +56,3 @@ To delete all of the resources, run the following command:
 ```
 helm template charts/apps/ | kubectl delete -f -
 ```
-
-![image](https://github.com/capgainschristian/crossplane-aws-ready/assets/63564473/013ec9de-1f52-4cf8-9d4e-83f9efec241b)
-AWS application showing all of the AWS resources currently deployed.
