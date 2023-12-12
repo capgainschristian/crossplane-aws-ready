@@ -3,8 +3,6 @@ kind: AppProject
 metadata:
   name: argocd
   namespace: argocd
-additionalLabels: {}
-additionalAnnotations: {}
 spec:
   clusterResourceWhitelist:
   - group: '*'
