@@ -4,7 +4,6 @@
 minikube start --cpus=4 --memory=16GB
 
 # Add argocd secret
-
 kubectl create ns argocd
 sops -d charts/credentials/argocd-repo-creds.txt > env_vars.txt && source env_vars.txt
 cat <<EOF | kubectl apply -f -
@@ -48,9 +47,6 @@ rm delete_me.txt
 kubectl apply -f crossplane/aws/aws.yaml
 kubectl wait provider/provider-aws --for=condition=Healthy --timeout=240s
 kubectl apply -f crossplane/aws/provider_config.yaml
-
-# Get AWS resources up and running
-kubectl apply -f crossplane/aws/resources.
 
 # App of Apps install
 helm template charts/apps/ | kubectl apply -f -
