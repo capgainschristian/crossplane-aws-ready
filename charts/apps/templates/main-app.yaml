@@ -10,7 +10,7 @@ spec:
     name: in-cluster
     namespace: default
   source:
-    path: charts/apps/
+    path: charts/apps
     repoURL: 'https://github.com/capgainschristian/crossplane-aws-ready'
     targetRevision: HEAD
   project: default
