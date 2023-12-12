@@ -8,12 +8,12 @@ metadata:
 spec:
   destination:
     name: in-cluster
-    namespace: default
+    namespace: argocd
   source:
     path: charts/argo-cd
     repoURL: 'https://github.com/capgainschristian/crossplane-aws-ready'
     targetRevision: HEAD
-  project: default
+  project: argocd
   syncPolicy:
     automated:
       selfHeal: true
