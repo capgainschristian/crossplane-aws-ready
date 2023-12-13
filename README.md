@@ -4,16 +4,17 @@ This repo will get you up and running with an EC2 instance that you can ssh into
 
 PREREQUISITES
 
-1) You will need awscli, helm, and minikube installed.
+1) Install awscli, helm, and minikube.
 
-2) You will need to add your AWS credentials as a file:
+2) Save your AWS credentials to a file called aws-credentials.txt:
 
 ```
 [default]
 aws_access_key_id = <your_aws_access_key>
 aws_secret_access_key = <your_aws_secret_key>
 ```
-Save the file as aws-credentials.txt and then run the following:
+
+Then run the following (make sure ```--from-file=creds=``` is pointing to the location of the file you created above) to create the secret for your AWS provider:
 
 ```
 kubectl create ns crossplane-system
@@ -24,22 +25,57 @@ generic aws-secret \
 --from-file=creds=./aws-credentials.txt
 ```
 
-3) You will need to create an EC2 key-pair called crossplane_key:
+3) Create an EC2 key-pair called crossplane_key. It has to be called crossplane_key because that's what the EC2 Custom Resource Definition (CRD) will be looking for:
 
 ```
 aws ec2 create-key-pair --key-name crossplane_key --query 'KeyMaterial' --output text > MyKeyPair.pem
 chmod 400 MyKeyPair.pem
 ```
 
+4) Create the secret ```private-repo-creds``` for your ArgoCD instance to use. Make sure to replace the values under StringData with your Github account information:
+
+```
+kubectl create ns argocd
+
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: Secret
+metadata:
+  name: private-repo-creds
+  namespace: argocd
+  annotations:
+    managed-by: argocd.argoproj.io
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  type: ${TYPE}
+  url: ${URL}
+  password: ${PASSWORD}
+  username: ${USERNAME}
+```
+
 INSTALLATION
 
-1) Verify that the crossplane-system namespace has the aws-secret:
+1) Verify that you have the required secrets created:
 
 ```
 kubectl get secret aws-secret -n crossplane-system
+kubectl get secret private-repo-creds -n argocd
 ```
 
-2) Run the ./setup script.
+2) Run the ./setup script. Alternatively, if you want to skip ArgoCD and just run Crossplane, do the following:
+
+```
+helm repo add crossplane-stable https://charts.crossplane.io/stable
+helm repo update
+helm install crossplane --namespace crossplane-system crossplane-stable/crossplane --wait
+
+kubectl apply -f crossplane/aws/aws.yaml
+kubectl wait provider/provider-aws --for=condition=Healthy --timeout=240s
+kubectl apply -f crossplane/aws/provider_config.yaml
+
+kubectl apply -f crossplane/aws/resources/.
+```
 
 3) Wait for your EC2 instance to show up on AWS, then try to ssh into it using your MyKeyPair.pem key.
 
