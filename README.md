@@ -79,8 +79,9 @@ kubectl apply -f crossplane/aws/resources/.
 
 3) Wait for your EC2 instance to show up on AWS, then try to ssh into it using your MyKeyPair.pem key.
 
+<br />
 
-
+The end result should look something like this:
 
 ![image](https://github.com/capgainschristian/crossplane-aws-ready/assets/63564473/200e4c4a-be57-46d1-9f9f-348a904cd8b8)
 ArgoCD dashboard with AWS application.
