@@ -1,6 +1,6 @@
 #!/bin/bash
 
-minikube start --cpus=4 --memory=16GB
+#minikube start --cpus=4 --memory=16GB
 
 kubectl create ns argocd
 
